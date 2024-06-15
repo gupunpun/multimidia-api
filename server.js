@@ -5,38 +5,42 @@ const server = fastify();
 
 const database = new DatabaseMemory()
 
-server.get('/alunos', () => {
+server.get('/anime', () => {
     return database.list()
 })
 
-server.post('/alunos', (req, res) => {
-    const { nome, idade, matriculado, time } = req.body
+server.post('/anime', (req, res) => {
+    const { name, daterealese, seasons, rating, mc, villain} = req.body
 
     database.create({
-        nome,
-        idade,
-        matriculado,
-        time
+        name,
+        daterealese,
+        seasons,
+        rating,
+        mc,
+        villain
     })
 
     return res.status(201).send()
 })
 
-server.put('/alunos/:id', (req, res) => {
+server.put('/anime/:id', (req, res) => {
    const id = req.params.id
-   const { nome, idade, matriculado, time } = req.body
+   const { name, daterealese, seasons, rating, mc, villain } = req.body
 
    database.update(id, {
-       nome,
-       idade,
-       matriculado,
-       time
+    name,
+    daterealese,
+    seasons,
+    rating,
+    mc,
+    villain
    })
 
    res.status(204).send()
 })
 
-server.delete('/alunos/:id', (req, res) => {
+server.delete('/anime/:id', (req, res) => {
     const id = req.params.id
     database.delete(id)
     return res.status(200).send()
