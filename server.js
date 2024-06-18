@@ -10,7 +10,7 @@ server.get('/anime', () => {
 })
 
 server.post('/anime', (req, res) => {
-    const { name, daterealese, seasons, rating, mc, villain} = req.body
+    const { name, daterealese, seasons, rating, mc, villain, img} = req.body
 
     database.create({
         name,
@@ -18,7 +18,8 @@ server.post('/anime', (req, res) => {
         seasons,
         rating,
         mc,
-        villain
+        villain,
+        img
     })
 
     return res.status(201).send()
@@ -26,7 +27,7 @@ server.post('/anime', (req, res) => {
 
 server.put('/anime/:id', (req, res) => {
    const id = req.params.id
-   const { name, daterealese, seasons, rating, mc, villain } = req.body
+   const { name, daterealese, seasons, rating, mc, villain, img} = req.body
 
    database.update(id, {
     name,
@@ -34,7 +35,8 @@ server.put('/anime/:id', (req, res) => {
     seasons,
     rating,
     mc,
-    villain
+    villain,
+    img
    })
 
    res.status(204).send()
