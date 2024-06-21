@@ -55,5 +55,5 @@ server.delete('/anime/:id', (req, res) => {
 })
 
 server.listen({
-    port: 3334
+    port: 3333
 })
