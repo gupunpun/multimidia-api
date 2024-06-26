@@ -2,26 +2,30 @@ import { fastify } from "fastify";
 import cors from '@fastify/cors'
 
 import { DatabaseMemory } from "./database-memory.js";
+import {DatabaseSql} from "./database/database-sql.js";
 
 const server = fastify();
+
 await server.register(cors, {
     origin: '*',
     methods: ['GET']
 })
 
-const database = new DatabaseMemory()
+// const database = new DatabaseMemory()
+const database = new DatabaseSql()
 
-server.get('/anime', () => {
-    return database.list()
+server.get('/anime', async () => {
+    return await database.list()
 })
 
-server.post('/anime', (req, res) => {
-    const { name, daterealese, seasons, rating, mc, villain, img} = req.body
 
-    database.create({
+server.post('/anime', async (req, res) => {
+    const { name, daterealese, season, rating, mc, villain, img} = req.body
+
+    await database.create({
         name,
         daterealese,
-        seasons,
+        season,
         rating,
         mc,
         villain,
@@ -31,14 +35,14 @@ server.post('/anime', (req, res) => {
     return res.status(201).send()
 })
 
-server.put('/anime/:id', (req, res) => {
+server.put('/anime/:id', async (req, res) => {
    const id = req.params.id
-   const { name, daterealese, seasons, rating, mc, villain, img} = req.body
+   const { name, daterealese, season, rating, mc, villain, img} = req.body
 
-   database.update(id, {
+   await database.update(id, {
     name,
     daterealese,
-    seasons,
+    season,
     rating,
     mc,
     villain,
@@ -48,9 +52,9 @@ server.put('/anime/:id', (req, res) => {
    res.status(204).send()
 })
 
-server.delete('/anime/:id', (req, res) => {
+server.delete('/anime/:id',async (req, res) => {
     const id = req.params.id
-    database.delete(id)
+    await database.delete(id)
     return res.status(200).send()
 })
 
